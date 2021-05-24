@@ -19,12 +19,7 @@ async function createRandomShortCode(link) {
     "link":link
   }
   return await db.create(doc)
-   ,function(err,res){
-        if(err){
-          throw err;
-        }
-        console.log("Insertion sucesss")
-      }
+   
   
   
 }

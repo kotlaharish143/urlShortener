@@ -11,14 +11,14 @@
     <div class="container">
         <div class="row">
             <div class="offset-md-3 col-md-6">
-                <form>
+                <form id="form">
                     <div class="mb-3">
-                      <label for="exampleInputEmail1" class="form-label">Enter Link</label>
-                      <input type="email" class="form-control" id="link" aria-describedby="emailHelp">
-                      <div id="emailHelp" class="form-text">Enter the Link to be shortened</div>
+                      <label for="exampleInputlink1" class="form-label">Enter Link</label>
+                      <input type="text" id="link" >
+                      <div id="linkHelp" class="form-text">Enter the Link to be shortened</div>
                     </div>
                     <div class="mb-3">
-                      <label for="exampleInputPassword1" class="form-label">code</label>
+                      <label for="exampleInputcode1" class="form-label">code</label>
                       <input type="text" class="form-control" id="code">
                     </div>
                     <div class="mb-3 form-check">
@@ -36,4 +36,30 @@
         </div>
     </div>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    
+    var form =document.getElementById('form')
+    form.addEventListener('submit',async (e)=>{
+        e.preventDefault();
+        var link=document.getElementById('link').value;
+        var code=document.getElementById('code').value;
+      var result=document.getElementById('res')
+         var r=await axios.post('http://localhost:4445/api/links',data={
+            link:link,code:code
+        },(err,res)=>{
+            if(err) throw err 
+            else 
+            return res;
+         })
+        //  const re=r.then(res=>res.data)
+        result.value="http://localhost:4445/"+r.data;
+    })
+  
+
+
+</script>
+
+
+
 </html>

@@ -21,13 +21,13 @@ route.post("/", async (req, res) => {
 
   if (!code) {
     const url = await createRandomShortCode(link);
-    console.log(url)
-    return res.json(url);
+    
+    return res.json(url.code);
   }
 
   try {
     const url = await createCustomShortCode(code, link);
-    return res.json(url);
+    return res.json(url.code);
   } catch (e) {
     return res.status(400).json({ error: e.message });
   }
