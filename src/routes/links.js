@@ -21,6 +21,7 @@ route.post("/", async (req, res) => {
 
   if (!code) {
     const url = await createRandomShortCode(link);
+    console.log(url)
     return res.json(url);
   }
 
@@ -44,7 +45,8 @@ route.get("/:code", async (req, res) => {
   const url = await findLongUrl(code);
 
   if (url) {
-    return res.json(url);
+   
+    return res.send(url.link);
   } else {
     return res.status(404).json({ error: "No such shortcode created" });
   }

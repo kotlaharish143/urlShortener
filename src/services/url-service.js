@@ -1,37 +1,46 @@
-const { URLs } = require("../models/db");
+const { db } = require("../models/dbsql");
 const { int2radix64, radix64toint } = require("../services/radix64-service");
 
 async function createRandomShortCode(link) {
   const genCode = parseInt(Math.random() * 999999999999);
 
-  const exists = await URLs.findOne({
-    where: {
+  const exists = await db.find({
+  
       id: genCode,
-    },
+    
   });
-  if (exists) {
+  if (exists.length!=0) {
     // FIX: possible race condition if multiple servers vs 1 db
     return await createRandomShortCode(link);
   }
-  return await URLs.create({
-    id: genCode,
-    code: int2radix64(genCode),
-    link: link,
-  });
+  const doc={
+    "id":genCode,
+    "code": int2radix64(genCode),
+    "link":link
+  }
+  return await db.create(doc)
+   ,function(err,res){
+        if(err){
+          throw err;
+        }
+        console.log("Insertion sucesss")
+      }
+  
+  
 }
 
 async function createCustomShortCode(code, link) {
   // TODO: validate code
   const id = radix64toint(code);
-  const exists = await URLs.findOne({
-    where: {
+  const exists = await db.findOne({
+  
       id: id,
     },
-  });
+  );
   if (exists) {
     throw new Error("This shortcode [" + code + "] already exists");
   }
-  return await URLs.create({
+  return await db.create({
     id: id,
     code: code,
     link: link,
@@ -40,11 +49,9 @@ async function createCustomShortCode(code, link) {
 
 async function findLongUrl(code) {
   const id = radix64toint(code);
-  return await URLs.findOne({
-    where: {
+  return await db.findOne({
       id: id,
-    },
-  });
+  },{_id:0}).select('link');
 }
 
 module.exports = {
