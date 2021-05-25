@@ -18,16 +18,16 @@ route.post("/", async (req, res) => {
   const link = req.body.link;
   const code = req.body.code;
   // TODO: validate link must exist
-
+ 
   if (!code) {
     const url = await createRandomShortCode(link);
     
-    return res.json(url.code);
+    return res.json(req.headers.host+"/"+url.code);
   }
 
   try {
     const url = await createCustomShortCode(code, link);
-    return res.json(url.code);
+    return res.json(req.headers.host+"/"+url.code);
   } catch (e) {
     return res.status(400).json({ error: e.message });
   }

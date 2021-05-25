@@ -1,6 +1,6 @@
 const mongoose=require('mongoose')
 const Schema=mongoose.Schema
-const connection= mongoose.connect("mongodb://localhost:27017/urlShortener",{
+const connection= mongoose.connect("mongodb+srv://harish143:12345678@@cluster0.5b5nr.mongodb.net/urlShortener?retryWrites=true&w=majority",{
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,

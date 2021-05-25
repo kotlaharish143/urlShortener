@@ -15,6 +15,6 @@ app.use('/', redirRoute)
 //     .then(() => console.log('db works'))
 //     .catch((err) => console.error(err))
 
-app.listen(4445, () => {
-    console.log('Server started on http://localhost:4445')
+app.listen(process.env.PORT || 4445, () => {
+    console.log('Server started ')
 })
