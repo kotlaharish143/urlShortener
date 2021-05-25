@@ -1,28 +1,28 @@
-// const { Sequelize, DataTypes } = require('sequelize')
+const mongoose=require('mongoose')
+const Schema=mongoose.Schema
+const connection= mongoose.connect("mongodb+srv://harish143:12345678@@cluster0.5b5nr.mongodb.net/urlShortener?retryWrites=true&w=majority",{
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true
+})
+mongoose.connection.on('connected', () => {
+  console.log("mongoose is connected")
+})
 
-// const db = new Sequelize({
-//     dialect: 'postgres',
-//     database: 'sclrac',
-//     username: 'sclrac',
-//     password: 'sclrac'
-// })
+const UrlSchema=new Schema({
+  id:{
+    type:Number,
+    unique:true
+  },
+  code:{
+    type:String,
+    unique:true
+  },
+  link:{type:String}
+})
 
-// const URLs = db.define('urls', {
-//     id: {
-//         primaryKey: true,
-//         type: DataTypes.BIGINT
-//     },
-//     code: {
-//         type: DataTypes.STRING(7),
-//         unique: true
-//     },
-//     link: {
-//         type: DataTypes.TEXT,
-//         allowNull: false
-//     }
-// })
 
-// module.exports = {
-//     db,
-//     URLs
-// }
+const db=mongoose.model('url',UrlSchema)
+
+module.exports={db}

@@ -1,4 +1,4 @@
-const { db } = require("../models/dbsql");
+const { db } = require("../models/db");
 const { int2radix64, radix64toint } = require("../services/radix64-service");
 
 async function createRandomShortCode(link) {
